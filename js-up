@@ -1,0 +1,35 @@
+#!/bin/bash
+
+juice_up() {
+    local number="$1"
+
+    # Check if the number is within the valid range (1 to 10)
+    if [[ "$number" -lt 1 || "$number" -gt 10 ]]; then
+        echo "Error: The number must be between 1 and 10 (inclusive)."
+        exit 1
+    fi
+
+    # Loop through the numbers
+    for i in $(seq 1 $number);
+    do
+    	# Run the docker-compose command with the given number
+    	local compose_file="./juice-${i}.yml"
+	eval "docker-compose -f $compose_file -p juice-${i} up -d"
+     done
+}
+
+# Check if an argument was provided
+if [[ -z "$1" ]]; then
+    echo "Error: Please provide a number as an argument."
+    exit 1
+fi
+
+# Check if the argument is a valid integer
+if ! [[ "$1" =~ ^[0-9]+$ ]]; then
+    echo "Error: The input must be a valid positive integer."
+    exit 1
+fi
+
+# Call the juice_up function with the provided number
+juice_up "$1"
+

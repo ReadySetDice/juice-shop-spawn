@@ -1,0 +1,14 @@
+#!/bin/bash
+
+juice_down() {
+    # Loop through the numbers
+    for i in $(seq 1 10);
+    do
+    	# Run the docker-compose command with the given number
+    	local compose_file="./juice-${i}.yml"
+
+	eval "docker-compose -f $compose_file -p juice-${i} down"
+    done
+}
+
+juice_down

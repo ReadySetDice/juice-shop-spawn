@@ -1,0 +1,7 @@
+version: "3.5"
+services:
+  shop:
+    image: bkimminich/juice-shop:latest
+    ports:
+      - 8004:3000
+    restart: unless-stopped
